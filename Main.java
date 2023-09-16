@@ -1,24 +1,29 @@
+import java.util.ArrayList;
+import java.util.Collections; 
+
 public class Main {
-    public static void insertionSort(int array[]) {  
-        int n = array.length;  
-        for (int j = 1; j < n; j++) {  
-            int key = array[j];  
-            int i = j-1;  
-            while ( (i > -1) && ( array [i] > key ) ) {  
-                array [i+1] = array [i];  
-                i--;  
-            }  
-            array[i+1] = key;  
+    public static void insertionSort(ArrayList<Integer> arrayList) {
+        int n = arrayList.size();
+        for (int j = 1; j < n; j++) {
+            int key = arrayList.get(j);
+            int i = j - 1;
+            while ((i > -1) && (arrayList.get(i) > key)) {
+                arrayList.set(i + 1, arrayList.get(i));
+                i--;
+            }
+            arrayList.set(i + 1, key);
         }
     }
 
     public static void main(String[] args) {
-        int[] arr1 = {9,14,3,2,43,11,58,22};   
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        
+        Collections.addAll(list, 2, 6, 1, 8, 3);
+        
+        insertionSort(list);
 
-        insertionSort(arr1);
-
-        for(int i:arr1){    
-            System.out.print(i+" ");    
-            }        
+        for(int i:list) { 
+            System.out.print(i+" ");          
         }
+    }
 }
