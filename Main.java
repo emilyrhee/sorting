@@ -1,5 +1,6 @@
 import java.util.ArrayList;
-import java.util.Collections; 
+import java.util.Scanner;
+import java.io.File;
 
 public class Main {
     public static void insertionSort(ArrayList<Integer> arrayList) {
@@ -18,8 +19,16 @@ public class Main {
     public static void main(String[] args) {
         ArrayList<Integer> list = new ArrayList<Integer>();
         
-        Collections.addAll(list, 2, 6, 1, 8, 3);
-        
+        try {
+            Scanner line = new Scanner(new File("datasets/prototype.txt"));
+            while(line.hasNextInt()) {
+                list.add(line.nextInt());
+                line.nextLine();
+            }
+        } catch(Exception e) {
+            System.out.print("");
+        }
+
         insertionSort(list);
 
         for(int i:list) { 
