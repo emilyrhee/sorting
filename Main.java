@@ -4,15 +4,14 @@ import java.io.File;
 
 public class Main {
     public static void insertionSort(ArrayList<Integer> arrayList) {
-        int n = arrayList.size();
-        for (int j = 1; j < n; j++) {
-            int key = arrayList.get(j);
-            int i = j - 1;
-            while ((i > -1) && (arrayList.get(i) > key)) {
-                arrayList.set(i + 1, arrayList.get(i));
-                i--;
+        for (int i = 1; i < arrayList.size(); i++) {
+            int current = arrayList.get(i);
+            int j = i;
+            while ((j > 0) && (arrayList.get(j - 1) > current)) {
+                arrayList.set(j, arrayList.get(j - 1));
+                j--;
             }
-            arrayList.set(i + 1, key);
+            arrayList.set(j, current);
         }
     }
 
