@@ -26,22 +26,31 @@ public class Main {
     }
 
     public static void insertionSort(ArrayList<Integer> arrayList) {
+        int exchanges = 0;
+        int comparisons = 0;
+        
         for (int i = 1; i < arrayList.size(); i++) {
             int current = arrayList.get(i);
             int j = i;
+
             while ((j > 0) && (arrayList.get(j - 1) > current)) {
+                comparisons++;
                 arrayList.set(j, arrayList.get(j - 1));
+                exchanges++;
                 j--;
             }
+
             arrayList.set(j, current);
         }
+        System.out.println("Comparisons: " + comparisons);
+        System.out.println("Exchanges: " + exchanges);    
     }
 
     public static void main(String[] args) {
         ArrayList<Integer> list = new ArrayList<Integer>();
         
         try {
-            Scanner line = new Scanner(new File("datasets/prototype.txt"));
+            Scanner line = new Scanner(new File("datasets/large/reversed.txt"));
             while(line.hasNextInt()) {
                 list.add(line.nextInt());
                 line.nextLine();
@@ -53,6 +62,7 @@ public class Main {
         insertionSort(list);
 
         for(int i:list) { 
+
             System.out.print(i+" ");          
         }
     }
