@@ -70,31 +70,34 @@ public class Main {
         System.out.println("Exchanges: " + exchanges);
     }    
 
+    public static void radixSort(int[] array) {
+        int digit = 1;
+        int[] masterList = new int[array.length];
+        Queue[] pileList = new Queue[10];
+        Queue queue = new Queue();
+        for (int i = 0; i < array.length; i++) {
+            queue.enqueue(array[i]); 
+        }
+
+        queue = new Queue();    // reinitialize queue
+    }
+
+
     public static void main(String[] args) {
         int[] array = new int[10];
         int index = 0; 
-        
+                
         try {
             Scanner line = new Scanner(new File("datasets/small/reverse.txt"));
-            while (line.hasNextInt()) {
-                array[index] = line.nextInt();
-                line.nextLine();
-                index++;
-            }
+                while (line.hasNextInt()) {
+                    array[index] = line.nextInt();
+                    line.nextLine();
+                    index++;
+                }
         } catch (Exception e) {
             System.out.print("");
         }
-
-        for (int i = 0; i <= index; i++) {
-            System.out.print(array[i] + " ");
-        }
-
-        System.out.println();
-
-        bubbleSort(array);
-
-        for (int i = 0; i <= index; i++) {
-            System.out.print(array[i] + " ");
-        }
+        
+        radixSort(array);
     }
 }
