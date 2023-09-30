@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.File;
+import java.io.FileNotFoundException;
 
 public class Main {
     public static void selectionSort(ArrayList<Integer> list) {
@@ -46,44 +47,54 @@ public class Main {
         System.out.println("Exchanges: " + exchanges);    
     }
     
-    public static void bubbleSort(ArrayList<Integer> list) {
+    public static void bubbleSort(int[] array) {
         int temp = 0;
         int exchanges = 0;
         int comparisons = 0;
-
-        for (int i = 1; i < list.size(); i++) {
-            for (int j = 0; j < list.size() - i; j++) {
+    
+        int n = array.length;
+    
+        for (int i = 1; i < n; i++) {
+            for (int j = 0; j < n - i; j++) {
                 comparisons++;
-                if (list.get(j) > list.get(j + 1)) {
-                    temp = list.get(j);
-                    list.set(j, list.get(j + 1));
-                    list.set(j + 1, temp);
+                if (array[j] > array[j + 1]) {
+                    temp = array[j];
+                    array[j] = array[j + 1];
+                    array[j + 1] = temp;
                     exchanges++;
                 }
             }
         }
+        
         System.out.println("Comparisons: " + comparisons);
-        System.out.println("Exchanges: " + exchanges);    
-    }
+        System.out.println("Exchanges: " + exchanges);
+    }    
 
     public static void main(String[] args) {
-        ArrayList<Integer> list = new ArrayList<Integer>();
+        int[] array = new int[10];
+        int index = 0; 
         
         try {
-            Scanner line = new Scanner(new File("datasets/large/ordered.txt"));
-            while(line.hasNextInt()) {
-                list.add(line.nextInt());
+            Scanner line = new Scanner(new File("datasets/small/reverse.txt"));
+            while (line.hasNextInt()) {
+                array[index] = line.nextInt();
                 line.nextLine();
+                index++;
             }
-        } catch(Exception e) {
+        } catch (Exception e) {
             System.out.print("");
         }
 
-        bubbleSort(list);
+        for (int i = 0; i <= index; i++) {
+            System.out.print(array[i] + " ");
+        }
 
-        for(int i:list) { 
+        System.out.println();
 
-            System.out.print(i+" ");          
+        bubbleSort(array);
+
+        for (int i = 0; i <= index; i++) {
+            System.out.print(array[i] + " ");
         }
     }
 }
