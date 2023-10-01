@@ -7,7 +7,7 @@ public class Main {
     public static void selectionSort(ArrayList<Integer> list) {
         int temp, min, exchanges = 0, comparisons = 0;
         int numberOfItems = list.size();
-        
+
         for (int pass = 0; pass != numberOfItems - 1; pass++) {
             min = pass;
             
@@ -44,7 +44,7 @@ public class Main {
             arrayList.set(j, current);
         }
         System.out.println("Comparisons: " + comparisons);
-        System.out.println("Exchanges: " + exchanges);    
+        System.out.println("Exchanges: " + exchanges); 
     }
     
     public static void bubbleSort(int[] array) {
@@ -70,6 +70,48 @@ public class Main {
         System.out.println("Exchanges: " + exchanges);
     }    
 
+    public static int getDigit(int num, int digit) {
+        return (num % (10 * digit) / digit);
+    }
+
+    // public static void radixSort(int[] array) {
+    //     int digitPlace = 1;
+    //     int[] masterList = new int[array.length];
+    //     Queue[] digitList = new Queue[10];
+    //     Queue queue = new Queue(10);
+    //     for (int i = 0; i < array.length; i++) {
+    //         queue.enqueue(array[i]); 
+    //     }
+
+    //     while (digitPlace < 100) {
+    //         for (int i = 0; i <= 9; i++) {
+    //             digitList[i] = new Queue();
+    //         }
+
+    //         while (!queue.empty()) {
+    //             queue.dequeue();
+    //             int digit = getDigit(queue.front(), digitPlace);
+    //             digitList[digit].enqueue(queue.front());
+    //         }
+
+    //         queue = new Queue();
+
+    //         for (int j = 0; j <= 9; j++) {
+    //             while(!digitList[j].empty()) {
+    //                 digitList[j].dequeue();
+    //                 queue.enqueue(queue.front());
+    //             }
+    //         }
+
+    //         digitPlace = digitPlace * 10;
+    //     }
+
+    //     // for (int i = 0; i <= queue.size(); i++) {
+    //     //     array[i] = queue.front();
+    //     //     queue.dequeue();
+    //     // }
+    // }
+
     public static void radixSort(int[] array) {
         int digit = 1;
         int[] masterList = new int[array.length];
@@ -79,9 +121,15 @@ public class Main {
             queue.enqueue(array[i]); 
         }
 
-        queue = new Queue();    // reinitialize queue
-    }
+        queue.print();
 
+        queue = new Queue();    // reinitialize queue
+
+        for (int i = 0; i < array.length; i++) {    // add queue values to array
+            array[i] = queue.front();
+            queue.dequeue();
+        }
+    }
 
     public static void main(String[] args) {
         int[] array = new int[10];
@@ -97,7 +145,12 @@ public class Main {
         } catch (Exception e) {
             System.out.print("");
         }
-        
+
+        for (int i = 0; i <= index; i++) {
+            //System.out.print(array[i] + " ");
+        }
+
         radixSort(array);
+
     }
 }
