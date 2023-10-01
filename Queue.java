@@ -44,6 +44,6 @@ public class Queue {
     }
 
     public void print() {
-        // must print between rear and front including front and rear
+        System.out.println(Arrays.toString(Arrays.copyOfRange(queueADT, front, rear + 1)));
     }
 }
