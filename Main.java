@@ -113,15 +113,28 @@ public class Main {
     // }
 
     public static void radixSort(int[] array) {
-        int digit = 1;
+        int digitPlace = 1;
         int[] masterList = new int[array.length];
-        Queue[] pileList = new Queue[10];
+        Queue[] digitList = new Queue[10];
         Queue queue = new Queue();
         for (int i = 0; i < array.length; i++) {
             queue.enqueue(array[i]); 
         }
 
-        queue.print();
+
+        //while (digitPlace < 100) {
+            for (int i = 0; i <= 9; i++) {
+                digitList[i] = new Queue();
+            }
+
+            while (!queue.empty()) {
+                queue.dequeue();
+                int digit = getDigit(queue.front(), digitPlace);
+                digitList[digit].enqueue(queue.front());
+                System.out.print(digit);
+                digitList[digit].print();
+            }
+        //}
 
         queue = new Queue();    // reinitialize queue
 
@@ -136,7 +149,7 @@ public class Main {
         int index = 0; 
                 
         try {
-            Scanner line = new Scanner(new File("datasets/small/reverse.txt"));
+            Scanner line = new Scanner(new File("datasets/small/random.txt"));
                 while (line.hasNextInt()) {
                     array[index] = line.nextInt();
                     line.nextLine();
