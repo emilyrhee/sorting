@@ -2,6 +2,57 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Arrays;
+
+class Quick {
+    static int comparisons = 0;
+    static int exchanges = 0;
+
+    static int partition(int[] array, int lo, int hi) {
+        int pivot = array[lo];
+
+        while (lo < hi) {
+            while (pivot < array[hi] && lo < hi) {
+                comparisons++;
+                hi--;
+            }
+            if (hi != lo) {
+                array[lo] = array[hi];
+                exchanges++;
+                lo++;
+            }
+            while (array[lo] < pivot && lo < hi) {
+                comparisons++;
+                lo++;
+            }
+            if (hi != lo) {
+                array[hi] = array[lo];
+                exchanges++;
+                hi--;
+            }
+        }
+        array[hi] = pivot;
+
+        return hi;
+    }
+
+    static void sort(int[] array, int lo, int hi) {
+        if (lo < hi) {
+            int pivotPoint = partition(array, lo, hi);
+
+            if (lo < pivotPoint) 
+                sort(array, lo, pivotPoint - 1);
+            
+            if (pivotPoint < hi) 
+                sort(array, pivotPoint + 1, hi);
+        }
+
+    }
+    static void printStats() {
+        System.out.println("Exchanges:" + exchanges);
+        System.out.println("Comparisons: " + comparisons);
+    }
+}
 
 public class Main {
     public static void selectionSort(ArrayList<Integer> list) {
