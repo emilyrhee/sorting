@@ -54,6 +54,42 @@ class Quick {
     }
 }
 
+class Shell {
+    static int comparisons = 0;
+    static int exchanges = 0;
+
+    static void segmentedInsertionSort(int[] array, int n, int h) {
+        for (int i = h; i < n; i++) {
+            int current = array[i]; 
+            int j = i;
+
+            while(j > h - 1 && (array[j-h] > current)) {
+                comparisons++;
+                array[j] = array[j - h];
+                j = j - h;
+                exchanges++;
+            }
+
+            array[j] = current;
+        }
+    }
+    
+    static int[] sort(int[] array, int n) {
+        int h = n / 2;
+        
+        while (h > 0) {
+            segmentedInsertionSort(array, n, h);
+            h = h / 2;
+        }
+
+        return array;
+    }
+    static void printStats() {
+        System.out.println("Exchanges:" + exchanges);
+        System.out.println("Comparisons: " + comparisons);
+    }
+}
+
 public class Main {
     public static void selectionSort(ArrayList<Integer> list) {
         int temp, min, exchanges = 0, comparisons = 0;
@@ -119,14 +155,14 @@ public class Main {
         
         System.out.println("Comparisons: " + comparisons);
         System.out.println("Exchanges: " + exchanges);
-    }    
+}
 
     public static void main(String[] args) {
         int[] array = new int[10];
         int index = 0; 
                 
         try {
-            Scanner line = new Scanner(new File("datasets/small/random.txt"));
+            Scanner line = new Scanner(new File("datasets/large/random.txt"));
                 while (line.hasNextInt()) {
                     array[index] = line.nextInt();
                     line.nextLine();
@@ -136,11 +172,16 @@ public class Main {
             System.out.print("");
         }
 
-        for (int i = 0; i <= index; i++) {
-            //System.out.print(array[i] + " ");
-        }
+        // Quick.sort(array, 0 ,array.length - 1);
+        // Quick.printStats();
 
-        radixSort(array);
+        // for (int i = 0; i <= index; i++) {
+        //     System.out.print(array[i] + " ");
+        // }
 
+        //System.out.println(Arrays.toString(Shell.sort(array, array.length)));
+        
+        Shell.sort(array, array.length);
+        Shell.printStats();
     }
 }
