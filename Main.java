@@ -75,15 +75,20 @@ class Shell {
     }
     
     static int[] sort(int[] array, int n) {
-        int h = n / 2;
-        
-        while (h > 0) {
-            segmentedInsertionSort(array, n, h);
-            h = h / 2;
+        int h = 1;
+    
+        while (h < n / 2) {
+            h = h * 2 + 1;
         }
+        
+        while (h >= 1) {
+            segmentedInsertionSort(array, n, h);
+            h = (h - 1) / 2;
+        }    
 
         return array;
     }
+
     static void printStats() {
         System.out.println("Exchanges:" + exchanges);
         System.out.println("Comparisons: " + comparisons);
@@ -113,52 +118,58 @@ public class Main {
         System.out.println("Exchanges: " + exchanges);    
     }
 
-    public static void insertionSort(ArrayList<Integer> arrayList) {
+    public static void insertionSort(int[] array) {
         int exchanges = 0;
         int comparisons = 0;
-        
-        for (int i = 1; i < arrayList.size(); i++) {
-            int current = arrayList.get(i);
+        int n = array.length;
+    
+        for (int i = 1; i < n; i++) {
+            int current = array[i];
             int j = i;
-
-            while ((j > 0) && (arrayList.get(j - 1) > current)) {
+    
+            while (j > 0 && array[j - 1] > current) {
                 comparisons++;
-                arrayList.set(j, arrayList.get(j - 1));
+                array[j] = array[j - 1];
                 exchanges++;
                 j--;
             }
-
-            arrayList.set(j, current);
+    
+            array[j] = current;
         }
+    
         System.out.println("Comparisons: " + comparisons);
-        System.out.println("Exchanges: " + exchanges); 
-    }
+        System.out.println("Exchanges: " + exchanges);
+    }    
     
     public static void bubbleSort(int[] array) {
         int temp = 0;
         int exchanges = 0;
         int comparisons = 0;
-    
         int n = array.length;
+        boolean madeSwaps = true;
     
         for (int i = 1; i < n; i++) {
-            for (int j = 0; j < n - i; j++) {
-                comparisons++;
-                if (array[j] > array[j + 1]) {
-                    temp = array[j];
-                    array[j] = array[j + 1];
-                    array[j + 1] = temp;
-                    exchanges++;
+            if (madeSwaps) {
+                madeSwaps = false;
+                for (int j = 0; j < n - i; j++) {
+                    comparisons++;
+                    if (array[j] > array[j + 1]) {
+                        temp = array[j];
+                        array[j] = array[j + 1];
+                        array[j + 1] = temp;
+                        exchanges++;
+                        madeSwaps = true;
+                    }
                 }
-            }
+            } else break;
         }
         
         System.out.println("Comparisons: " + comparisons);
         System.out.println("Exchanges: " + exchanges);
-}
+    }
 
     public static void main(String[] args) {
-        int[] array = new int[10];
+        int[] array = new int[2000];
         int index = 0; 
                 
         try {
@@ -172,16 +183,14 @@ public class Main {
             System.out.print("");
         }
 
-        // Quick.sort(array, 0 ,array.length - 1);
-        // Quick.printStats();
+        Quick.sort(array, 0 ,array.length - 1);
+        Quick.printStats();
 
-        // for (int i = 0; i <= index; i++) {
-        //     System.out.print(array[i] + " ");
-        // }
+        for (int i = 0; i <= index; i++) {
+            System.out.print(array[i] + " ");
+        }
 
-        //System.out.println(Arrays.toString(Shell.sort(array, array.length)));
-        
-        Shell.sort(array, array.length);
-        Shell.printStats();
+        // System.out.println(Arrays.toString(Shell.sort(array, array.length)));
+        // Shell.printStats();
     }
 }
