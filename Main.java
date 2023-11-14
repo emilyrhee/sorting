@@ -9,6 +9,7 @@ class Heap {
     static int exchanges = 0;
 
     static boolean precedes(int a, int b) {
+        comparisons++;
         return a < b;
     }
     
@@ -26,6 +27,7 @@ class Heap {
                 array[l] = array[k];
                 l = k;
                 k = 2 * l + 1;
+                exchanges++;
             } else {
                 foundSpot = true;
             }
@@ -44,15 +46,23 @@ class Heap {
         }
 
         y = array.length - 1;
+
         while (y > 0) {
             int temp = array[0];
+
             array[0] = array[y];
             array[y] = temp;
+            exchanges++;
 
             downHeap(array, 0, y);
 
             y--;
         }
+    }
+
+    static void printStats() {
+        System.out.println("Exchanges:" + exchanges);
+        System.out.println("Comparisons: " + comparisons);
     }
 }
 
@@ -221,11 +231,11 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        int[] array = new int[10];
+        int[] array = new int[2000];
         int index = 0; 
                 
         try {
-            Scanner line = new Scanner(new File("datasets/small/ordered.txt"));
+            Scanner line = new Scanner(new File("datasets/large/random.txt"));
                 while (line.hasNextInt()) {
                     array[index] = line.nextInt();
                     line.nextLine();
@@ -240,5 +250,7 @@ public class Main {
         for (int i = 0; i < array.length; i++) {
             System.out.print(array[i] + " ");
         }
+
+        Heap.printStats();
     }
 }
