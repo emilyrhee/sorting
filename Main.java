@@ -9,35 +9,51 @@ class Heap {
     static int exchanges = 0;
 
     static boolean precedes(int a, int b) {
-        return a > b;
+        return a < b;
     }
     
-    static int[] downHeap(int[] array, int index) {
+    static int[] downHeap(int[] array, int index, int heapSize) {
         boolean foundSpot = false;
-
         int l = index;
         int key = array[l];
-        int k = 2 * l;
+        int k = 2 * l + 1;
 
-        while (k <= array.length && !foundSpot) {
-            if (k < array.length && !precedes(array[k + 1], array[k]))
+        while (k < heapSize && !foundSpot) {
+            if (k + 1 < heapSize && !precedes(array[k + 1], array[k]))
                 k = k + 1;
 
-            if (!precedes(array[k], key)) {
+            if (k < heapSize && !precedes(array[k], key)) {
                 array[l] = array[k];
                 l = k;
-                k = 2 * 1;
+                k = 2 * l + 1;
             } else {
                 foundSpot = true;
             }
         }
 
         array[l] = key;
-
         return array;
     }
 
+    static void sort(int[] array) {
+        int y = array.length / 2;
 
+        while (y >= 0) {
+            downHeap(array, y, array.length);
+            y--;
+        }
+
+        y = array.length - 1;
+        while (y > 0) {
+            int temp = array[0];
+            array[0] = array[y];
+            array[y] = temp;
+
+            downHeap(array, 0, y);
+
+            y--;
+        }
+    }
 }
 
 class Quick {
@@ -205,7 +221,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        int[] array = new int[2000];
+        int[] array = new int[10];
         int index = 0; 
                 
         try {
@@ -219,8 +235,10 @@ public class Main {
             System.out.print("");
         }
 
-        // Quick.sort(array, 0 ,array.length - 1);
-        // Quick.printStats();
+        Heap.sort(array);
 
+        for (int i = 0; i < array.length; i++) {
+            System.out.print(array[i] + " ");
+        }
     }
 }
