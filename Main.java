@@ -4,6 +4,42 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
 
+class Heap {
+    static int comparisons = 0;
+    static int exchanges = 0;
+
+    static boolean precedes(int a, int b) {
+        return a > b;
+    }
+    
+    static int[] downHeap(int[] array, int index) {
+        boolean foundSpot = false;
+
+        int l = index;
+        int key = array[l];
+        int k = 2 * l;
+
+        while (k <= array.length && !foundSpot) {
+            if (k < array.length && !precedes(array[k + 1], array[k]))
+                k = k + 1;
+
+            if (!precedes(array[k], key)) {
+                array[l] = array[k];
+                l = k;
+                k = 2 * 1;
+            } else {
+                foundSpot = true;
+            }
+        }
+
+        array[l] = key;
+
+        return array;
+    }
+
+
+}
+
 class Quick {
     static int comparisons = 0;
     static int exchanges = 0;
@@ -173,7 +209,7 @@ public class Main {
         int index = 0; 
                 
         try {
-            Scanner line = new Scanner(new File("datasets/large/random.txt"));
+            Scanner line = new Scanner(new File("datasets/small/ordered.txt"));
                 while (line.hasNextInt()) {
                     array[index] = line.nextInt();
                     line.nextLine();
@@ -183,14 +219,8 @@ public class Main {
             System.out.print("");
         }
 
-        Quick.sort(array, 0 ,array.length - 1);
-        Quick.printStats();
+        // Quick.sort(array, 0 ,array.length - 1);
+        // Quick.printStats();
 
-        for (int i = 0; i <= index; i++) {
-            System.out.print(array[i] + " ");
-        }
-
-        // System.out.println(Arrays.toString(Shell.sort(array, array.length)));
-        // Shell.printStats();
     }
 }
